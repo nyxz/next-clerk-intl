@@ -1,10 +1,14 @@
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 export default function Home() {
   const t = useTranslations("Index");
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <>
       <div className="p-10 bg-green-700">{t("title")}</div>
-    </main>
+      <Link href="/en/protected" className="p-4 mt-8 bg-red-500">
+        Go to Protected page
+      </Link>
+    </>
   );
 }

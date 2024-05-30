@@ -10,13 +10,16 @@ const intlMiddleware = createMiddleware({
 const isProtectedRoute = createRouteMatcher(["/:locale/protected(.*)"]);
 
 export default clerkMiddleware((auth, req) => {
+  const [, locale] = req.nextUrl.pathname.split("/");
   if (isProtectedRoute(req)) {
-    auth().protect();
+    auth().protect({
+      unauthenticatedUrl: new URL(`/${locale}/sign-in`, req.url).toString(),
+    });
   }
 
   return intlMiddleware(req);
 });
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/", "/(de|en)/:path*"],
 };
